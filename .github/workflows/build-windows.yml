@@ -1,12 +1,16 @@
 name: build-windows
 
 # يشتغل يدوياً من تاب Actions في GitHub (زرار "Run workflow")
-# أو تلقائي مع أي push على main
+# أو تلقائي مع أي push على dev (فرع الشغل بتاعك دلوقتي)
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - dev
+      - dev
+
+permissions:
+  contents: write
 
 jobs:
   build-windows:
@@ -42,3 +46,15 @@ jobs:
           path: |
             packages/desktop/dist/*.exe
           if-no-files-found: error
+
+      # بينشئ Release دائم على GitHub برابط تحميل مباشر وثابت،
+      # عشان تقدر تبعته لأي حد من غير ما يحتاج يدخل على حسابك أو الريبو نفسه
+      - name: Create GitHub Release with the .exe
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nitro-code-v${{ github.run_number }}
+          name: "Nitro Code v${{ github.run_number }}"
+          files: packages/desktop/dist/*.exe
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
