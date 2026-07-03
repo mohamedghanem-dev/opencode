@@ -1,0 +1,44 @@
+name: build-windows
+
+# يشتغل يدوياً من تاب Actions في GitHub (زرار "Run workflow")
+# أو تلقائي مع أي push على main
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install dependencies (root)
+        run: bun install
+
+      - name: Build desktop app assets
+        working-directory: packages/desktop
+        run: bun run build
+        env:
+          OPENCODE_CHANNEL: prod
+
+      - name: Package Windows .exe
+        working-directory: packages/desktop
+        run: bun run package:win
+        env:
+          OPENCODE_CHANNEL: prod
+
+      - name: Upload .exe as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nitro-code-windows
+          path: |
+            packages/desktop/dist/*.exe
+          if-no-files-found: error

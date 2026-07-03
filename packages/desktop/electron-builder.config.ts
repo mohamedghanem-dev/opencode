@@ -33,9 +33,9 @@ const channel = (() => {
 })()
 
 const APP_IDS = {
-  dev: "ai.opencode.desktop.dev",
-  beta: "ai.opencode.desktop.beta",
-  prod: "ai.opencode.desktop",
+  dev: "com.nitrocode.desktop.dev",
+  beta: "com.nitrocode.desktop.beta",
+  prod: "com.nitrocode.desktop",
 } as const
 
 const getBase = (appId: string): Configuration => ({
@@ -74,8 +74,8 @@ const getBase = (appId: string): Configuration => ({
     sign: true,
   },
   protocols: {
-    name: "OpenCode",
-    schemes: ["opencode"],
+    name: "Nitro Code",
+    schemes: ["nitrocode"],
   },
   win: {
     icon: `resources/icons/icon.ico`,
@@ -115,8 +115,8 @@ function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode Dev",
-        rpm: { packageName: "opencode-dev" },
+        productName: "Nitro Code Dev",
+        rpm: { packageName: "nitro-code-dev" },
       }
     }
     case "beta": {
@@ -133,11 +133,10 @@ function getConfig() {
       return {
         ...base,
         appId,
-        productName: "OpenCode",
-        protocols: { name: "OpenCode", schemes: ["opencode"] },
-        publish: { provider: "github", owner: "anomalyco", repo: "opencode", channel: "latest" },
+        productName: "Nitro Code",
+        protocols: { name: "Nitro Code", schemes: ["nitrocode"] },
         deb: { fpm: [legacyDesktopEntryFpm] },
-        rpm: { packageName: "opencode", fpm: [legacyDesktopEntryFpm] },
+        rpm: { packageName: "nitro-code", fpm: [legacyDesktopEntryFpm] },
       }
     }
   }
