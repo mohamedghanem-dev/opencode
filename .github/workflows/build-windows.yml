@@ -1,13 +1,12 @@
 name: build-windows
 
 # يشتغل يدوياً من تاب Actions في GitHub (زرار "Run workflow")
-# أو تلقائي مع أي push على dev (فرع الشغل بتاعك دلوقتي)
+# أو تلقائي مع أي push على main (فرع الشغل بتاعك دلوقتي)
 on:
   workflow_dispatch:
   push:
     branches:
-      - dev
-      - dev
+      - main
 
 permissions:
   contents: write
