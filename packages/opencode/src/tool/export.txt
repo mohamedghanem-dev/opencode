@@ -1,0 +1,7 @@
+Export a project directory as a downloadable .zip archive.
+
+Use this tool when the user asks to download, export, zip, or package up a project, website, app, or set of files you have created or edited — for example after finishing a website, a Flutter/mobile app, or any multi-file deliverable, when the user wants a copy of it outside the editor.
+
+The archive is written to the user's Downloads folder (or a temp folder as a fallback) and excludes common junk directories (node_modules, .git, dist, build, and similar build artifacts) so the export stays small and relevant.
+
+Do not use this for single-file requests where reading or showing the file directly is enough — this is for handing off a whole project/folder.
