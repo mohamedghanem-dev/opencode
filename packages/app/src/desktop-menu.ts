@@ -200,6 +200,7 @@ export const DESKTOP_MENU: DesktopMenu[] = [
     id: "help",
     label: "Help",
     items: [
+      { type: "item", label: "Nitro Code Website", href: "https://nitrocode-ai.vercel.app" },
       { type: "item", label: "Export Logs...", command: "logs.export" },
       { type: "separator" },
       {

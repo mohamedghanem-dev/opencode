@@ -536,7 +536,7 @@ export function NewHome() {
           clearNotifications={clearNotifications}
           unseenCount={unseenCount}
           openSettings={openSettings}
-          openHelp={() => {}}
+          openHelp={() => platform.openLink("https://nitrocode-ai.vercel.app")}
           language={language}
         />
 
@@ -628,7 +628,7 @@ export function NewHome() {
         <HomeUtilityNav
           class="flex lg:hidden"
           openSettings={openSettings}
-          openHelp={() => {}}
+          openHelp={() => platform.openLink("https://nitrocode-ai.vercel.app")}
           language={language}
         />
       </div>
