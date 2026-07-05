@@ -43,14 +43,14 @@ import { migrate } from "./migrate"
 import { cleanupStoreFiles } from "./store-cleanup"
 
 const APP_NAMES: Record<string, string> = {
-  dev: "OpenCode Dev",
-  beta: "OpenCode Beta",
-  prod: "OpenCode",
+  dev: "Nitro Code Dev",
+  beta: "Nitro Code Beta",
+  prod: "Nitro Code",
 }
 const APP_IDS: Record<string, string> = {
-  dev: "ai.opencode.desktop.dev",
-  beta: "ai.opencode.desktop.beta",
-  prod: "ai.opencode.desktop",
+  dev: "com.nitrocode.desktop.dev",
+  beta: "com.nitrocode.desktop.beta",
+  prod: "com.nitrocode.desktop",
 }
 const TEST_ONBOARDING = process.env.OPENCODE_TEST_ONBOARDING === "1"
 const jsCallStackFeature = "DocumentPolicyIncludeJSCallStacksInCrashReports"
@@ -129,7 +129,7 @@ const main = Effect.gen(function* () {
     process.env.XDG_STATE_HOME = join(root, "state")
     return root
   })()
-  app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "OpenCode Dev")
+  app.setName(app.isPackaged ? APP_NAMES[CHANNEL] : "Nitro Code Dev")
   app.setAppUserModelId(appId)
   app.setPath(
     "userData",

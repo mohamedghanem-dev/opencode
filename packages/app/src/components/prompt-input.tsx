@@ -1720,7 +1720,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
                     class="size-7 rounded-md p-[6px] text-v2-icon-icon-inverse shadow-[var(--v2-elevation-button-contrast)] disabled:opacity-50"
                     style={{
                       "background-image":
-                        "linear-gradient(180deg,var(--v2-alpha-light-20) 0%,var(--v2-alpha-light-0) 100%),linear-gradient(90deg,var(--v2-red-500) 0%,var(--v2-red-500) 100%)",
+                        "linear-gradient(180deg,var(--v2-alpha-light-20) 0%,var(--v2-alpha-light-0) 100%),linear-gradient(90deg,var(--v2-red-600) 0%,var(--v2-red-600) 100%)",
                     }}
                     aria-label={stopping() ? language.t("prompt.action.stop") : language.t("prompt.action.send")}
                   />
@@ -1854,7 +1854,7 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
                       icon={stopping() ? "stop" : store.mode === "shell" ? "arrow-undo-down" : "arrow-up"}
                       variant="primary"
                       class="size-8"
-                      style={{ "background-color": "var(--v2-red-500)", color: "#ffffff" }}
+                      style={{ "background-color": "var(--v2-red-600)", color: "#ffffff" }}
                       aria-label={stopping() ? language.t("prompt.action.stop") : language.t("prompt.action.send")}
                     />
                   </Tooltip>
