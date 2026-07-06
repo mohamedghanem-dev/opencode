@@ -1,9 +1,10 @@
-import { Component, Show, createMemo, createResource, onMount } from "solid-js"
+import { Component, Show, createMemo, createResource, createSignal, onMount } from "solid-js"
 import { createMediaQuery } from "@solid-primitives/media"
 import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
 import { SelectV2 } from "@opencode-ai/ui/v2/select-v2"
 import { Switch } from "@opencode-ai/ui/v2/switch-v2"
 import { TextInputV2 } from "@opencode-ai/ui/v2/text-input-v2"
+import { TextareaV2 } from "@opencode-ai/ui/v2/textarea-v2"
 import { useTheme, type ColorScheme } from "@opencode-ai/ui/theme/context"
 import { useDialog } from "@opencode-ai/ui/context/dialog"
 import { useLanguage } from "@/context/language"
@@ -134,6 +135,20 @@ export const SettingsGeneralV2: Component<{
     () => Promise.resolve(platform.getPinchZoomEnabled?.() ?? false).catch(() => false),
     { initialValue: false },
   )
+
+  const [agentsMdDraft, setAgentsMdDraft] = createSignal("")
+  const [agentsMdStatus, setAgentsMdStatus] = createSignal<"idle" | "saving" | "saved">("idle")
+  const [agentsMdLoaded] = createResource(async () => {
+    const content = await (window as any).api?.readAgentsMd?.().catch(() => "")
+    setAgentsMdDraft(content ?? "")
+    return content ?? ""
+  })
+  async function saveAgentsMd() {
+    setAgentsMdStatus("saving")
+    const ok = await (window as any).api?.writeAgentsMd?.(agentsMdDraft())
+    setAgentsMdStatus(ok ? "saved" : "idle")
+    if (ok) setTimeout(() => setAgentsMdStatus("idle"), 2000)
+  }
 
   onMount(() => {
     void theme.loadThemes()
@@ -345,6 +360,34 @@ export const SettingsGeneralV2: Component<{
                 {language.t("common.clear")}
               </ButtonV2>
             </Show>
+          </div>
+        </SettingsRowV2>
+
+        <SettingsRowV2
+          title={language.t("settings.general.row.agentsMd.title")}
+          description={language.t("settings.general.row.agentsMd.description")}
+        >
+          <div class="flex flex-col gap-2 w-full">
+            <TextareaV2
+              rows={6}
+              class="w-full"
+              placeholder={language.t("settings.general.row.agentsMd.placeholder")}
+              value={agentsMdDraft()}
+              onInput={(e) => setAgentsMdDraft(e.currentTarget.value)}
+            />
+            <div class="flex items-center gap-2 self-end">
+              <Show when={agentsMdStatus() === "saved"}>
+                <span class="text-12-regular text-v2-text-text-faint">{language.t("common.saved")}</span>
+              </Show>
+              <ButtonV2
+                variant="secondary"
+                size="small"
+                disabled={agentsMdStatus() === "saving"}
+                onClick={saveAgentsMd}
+              >
+                {language.t("common.save")}
+              </ButtonV2>
+            </div>
           </div>
         </SettingsRowV2>
 

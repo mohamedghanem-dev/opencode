@@ -230,6 +230,7 @@ export const dict = {
   "common.continue": "Continue",
   "common.submit": "Submit",
   "common.save": "Save",
+  "common.saved": "Saved",
   "common.saving": "Saving...",
   "common.default": "Default",
   "common.attachment": "attachment",
@@ -890,6 +891,10 @@ export const dict = {
   "settings.general.row.quickChatRoot.title": "Quick Chat folder",
   "settings.general.row.quickChatRoot.description":
     "Pick a base folder once. Every new Quick Chat creates its own subfolder inside it automatically, so you won't be asked to choose a folder each time.",
+  "settings.general.row.agentsMd.title": "Global instructions (AGENTS.md)",
+  "settings.general.row.agentsMd.description":
+    "Written here is loaded automatically into every conversation, in every project — describe yourself, your projects, and how you like Nitro Code to work.",
+  "settings.general.row.agentsMd.placeholder": "e.g. I build Electron + React + SQLite desktop apps with offline ECDSA licensing...",
   "settings.general.row.newLayoutDesigns.description": "Enable the redesigned layout, home, composer, and session UI",
   "settings.general.row.pinchZoom.title": "Pinch to zoom",
   "settings.general.row.pinchZoom.description": "Allow trackpad pinch and Ctrl-scroll gestures to zoom",

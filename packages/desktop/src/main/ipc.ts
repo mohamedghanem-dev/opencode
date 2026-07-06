@@ -1,8 +1,8 @@
 import { execFile } from "node:child_process"
-import { stat, mkdir } from "node:fs/promises"
+import { stat, mkdir, readFile, writeFile } from "node:fs/promises"
 import { existsSync } from "node:fs"
 import { basename, join } from "node:path"
-import { userInfo } from "node:os"
+import { userInfo, homedir } from "node:os"
 import { app, BrowserWindow, Notification, clipboard, dialog, ipcMain, shell } from "electron"
 import type { IpcMainEvent, IpcMainInvokeEvent } from "electron"
 import type { DesktopMenuAction } from "@opencode-ai/app/desktop-menu"
@@ -39,6 +39,17 @@ type Deps = {
   setBackgroundColor: (color: string) => void
   exportDebugLogs: () => Promise<string>
   recordFatalRendererError: (error: FatalRendererError) => Promise<void> | void
+}
+
+function agentsMdPath(): string {
+  const xdgConfig =
+    process.env.XDG_CONFIG_HOME ||
+    (process.platform === "win32"
+      ? process.env.APPDATA || join(homedir(), "AppData", "Roaming")
+      : process.platform === "darwin"
+        ? join(homedir(), "Library", "Preferences")
+        : join(homedir(), ".config"))
+  return join(xdgConfig, "opencode", "AGENTS.md")
 }
 
 export function registerIpcHandlers(deps: Deps) {
@@ -85,6 +96,25 @@ export function registerIpcHandlers(deps: Deps) {
       return candidate
     },
   )
+
+  // بيقرا ويكتب ملف AGENTS.md العام (نفس المسار اللي الـ backend بيقرا منه تلقائي مع كل محادثة)
+  ipcMain.handle("read-agents-md", async (): Promise<string> => {
+    try {
+      return await readFile(agentsMdPath(), "utf-8")
+    } catch {
+      return ""
+    }
+  })
+  ipcMain.handle("write-agents-md", async (_event: IpcMainInvokeEvent, content: string): Promise<boolean> => {
+    try {
+      const target = agentsMdPath()
+      await mkdir(join(target, ".."), { recursive: true })
+      await writeFile(target, content, "utf-8")
+      return true
+    } catch {
+      return false
+    }
+  })
   ipcMain.handle("set-default-server-url", (_event: IpcMainInvokeEvent, url: string | null) =>
     deps.setDefaultServerUrl(url),
   )
