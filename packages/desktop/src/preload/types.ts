@@ -49,6 +49,7 @@ export type ElectronAPI = {
   consumeInitialDeepLinks: () => Promise<string[]>
   getDefaultServerUrl: () => Promise<string | null>
   getOSUsername: () => Promise<string | null>
+  createProjectSubfolder: (root: string, label?: string) => Promise<string>
   setDefaultServerUrl: (url: string | null) => Promise<void>
   getDisplayBackend: () => Promise<LinuxDisplayBackend | null>
   setDisplayBackend: (backend: LinuxDisplayBackend | null) => Promise<void>

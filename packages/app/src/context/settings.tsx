@@ -34,6 +34,7 @@ export interface Settings {
     showCustomAgents: boolean
     mobileTitlebarPosition: "top" | "bottom"
     newLayoutDesigns?: boolean
+    quickChatRoot?: string | null
   }
   appearance: {
     fontSize: number
@@ -118,6 +119,7 @@ const defaultSettings: Settings = {
     editToolPartsExpanded: false,
     showCustomAgents: false,
     mobileTitlebarPosition: "top",
+    quickChatRoot: null,
   },
   appearance: {
     fontSize: 14,
@@ -251,6 +253,10 @@ export const { use: useSettings, provider: SettingsProvider } = createSimpleCont
         newLayoutDesigns,
         setNewLayoutDesigns(value: boolean) {
           setStore("general", "newLayoutDesigns", value)
+        },
+        quickChatRoot: withFallback(() => store.general?.quickChatRoot, defaultSettings.general.quickChatRoot),
+        setQuickChatRoot(value: string | null) {
+          setStore("general", "quickChatRoot", value)
         },
       },
       visibility: {

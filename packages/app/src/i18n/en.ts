@@ -222,6 +222,8 @@ export const dict = {
   "common.loading.ellipsis": "...",
   "common.cancel": "Cancel",
   "common.clear": "Clear",
+  "common.choose": "Choose...",
+  "common.notSet": "Not set",
   "common.open": "Open",
   "common.connect": "Connect",
   "common.disconnect": "Disconnect",
@@ -233,8 +235,8 @@ export const dict = {
   "common.attachment": "attachment",
 
   "prompt.placeholder.shell": "Enter shell command... {{example}}",
-  "prompt.placeholder.normal": 'Ask anything... "{{example}}"',
-  "prompt.placeholder.simple": "Ask anything...",
+  "prompt.placeholder.normal": "Ask Nitro Code anything...",
+  "prompt.placeholder.simple": "Ask Nitro Code anything...",
   "prompt.placeholder.summarizeComments": "Summarize comments…",
   "prompt.placeholder.summarizeComment": "Summarize comment…",
   "prompt.mode.shell": "Shell",
@@ -599,6 +601,7 @@ export const dict = {
   "notification.session.error.fallbackDescription": "An error occurred",
 
   "home.recentProjects": "Recent projects",
+  "home.quickChat": "Quick Chat",
   "home.empty.title": "No recent projects",
   "home.empty.description": "Get started by opening a local project",
   "home.title": "Home",
@@ -884,6 +887,9 @@ export const dict = {
   "settings.general.row.editToolPartsExpanded.description":
     "Show edit, write, and patch tool parts expanded by default in the timeline",
   "settings.general.row.newLayoutDesigns.title": "New layout and designs",
+  "settings.general.row.quickChatRoot.title": "Quick Chat folder",
+  "settings.general.row.quickChatRoot.description":
+    "Pick a base folder once. Every new Quick Chat creates its own subfolder inside it automatically, so you won't be asked to choose a folder each time.",
   "settings.general.row.newLayoutDesigns.description": "Enable the redesigned layout, home, composer, and session UI",
   "settings.general.row.pinchZoom.title": "Pinch to zoom",
   "settings.general.row.pinchZoom.description": "Allow trackpad pinch and Ctrl-scroll gestures to zoom",

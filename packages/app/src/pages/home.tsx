@@ -32,6 +32,7 @@ import { useNavigate } from "@solidjs/router"
 import { base64Encode } from "@opencode-ai/core/util/encode"
 import { Icon } from "@opencode-ai/ui/icon"
 import { usePlatform } from "@/context/platform"
+import { useSettings } from "@/context/settings"
 import { DateTime } from "luxon"
 import { useDialog } from "@opencode-ai/ui/context/dialog"
 import { useDirectoryPicker } from "@/components/directory-picker"
@@ -1409,6 +1410,7 @@ function groupSessions(records: HomeSessionRecord[], language: ReturnType<typeof
 export function LegacyHome() {
   const sync = useServerSync()
   const platform = usePlatform()
+  const settings = useSettings()
   const pickDirectory = useDirectoryPicker()
   const dialog = useDialog()
   const navigate = useNavigate()
@@ -1461,6 +1463,28 @@ export function LegacyHome() {
     })
   }
 
+  async function startQuickChat() {
+    if (serverUnreachable()) return
+    const s = server.current
+    if (!s) return
+
+    let root = settings.general.quickChatRoot()
+    if (!root) {
+      const picked = await platform.openDirectoryPickerDialog?.({
+        title: language.t("settings.general.row.quickChatRoot.title"),
+      })
+      const first = Array.isArray(picked) ? picked[0] : picked
+      if (!first) return
+      root = first
+      settings.general.setQuickChatRoot(root)
+    }
+
+    const createSubfolder = (window as any).api?.createProjectSubfolder
+    if (!createSubfolder) return
+    const directory = await createSubfolder(root)
+    openProject(s, directory)
+  }
+
   return (
     <div class="mx-auto mt-55 w-full md:w-auto px-4">
       <div class="flex flex-col items-center text-center">
@@ -1485,15 +1509,26 @@ export function LegacyHome() {
           <div class="mt-20 w-full flex flex-col gap-4">
             <div class="flex gap-2 items-center justify-between pl-3">
               <div class="text-14-medium text-text-strong">{language.t("home.recentProjects")}</div>
-              <Button
-                icon="folder-add-left"
-                size="normal"
-                class="pl-2 pr-3"
-                disabled={serverUnreachable()}
-                onClick={chooseProject}
-              >
-                {language.t("command.project.open")}
-              </Button>
+              <div class="flex gap-2">
+                <Button
+                  icon="plus"
+                  size="normal"
+                  class="pl-2 pr-3"
+                  disabled={serverUnreachable()}
+                  onClick={startQuickChat}
+                >
+                  {language.t("home.quickChat")}
+                </Button>
+                <Button
+                  icon="folder-add-left"
+                  size="normal"
+                  class="pl-2 pr-3"
+                  disabled={serverUnreachable()}
+                  onClick={chooseProject}
+                >
+                  {language.t("command.project.open")}
+                </Button>
+              </div>
             </div>
             <ul class="flex flex-col gap-2">
               <For each={recent()}>
@@ -1529,9 +1564,14 @@ export function LegacyHome() {
               <div class="text-14-medium text-text-strong">{language.t("home.empty.title")}</div>
               <div class="text-12-regular text-text-weak">{language.t("home.empty.description")}</div>
             </div>
-            <Button class="px-3 mt-1" disabled={serverUnreachable()} onClick={chooseProject}>
-              {language.t("command.project.open")}
-            </Button>
+            <div class="flex gap-2 mt-1">
+              <Button class="px-3" disabled={serverUnreachable()} onClick={startQuickChat}>
+                {language.t("home.quickChat")}
+              </Button>
+              <Button class="px-3" disabled={serverUnreachable()} onClick={chooseProject}>
+                {language.t("command.project.open")}
+              </Button>
+            </div>
           </div>
         </Match>
       </Switch>

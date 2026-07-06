@@ -1,6 +1,7 @@
 import { execFile } from "node:child_process"
-import { stat } from "node:fs/promises"
-import { basename } from "node:path"
+import { stat, mkdir } from "node:fs/promises"
+import { existsSync } from "node:fs"
+import { basename, join } from "node:path"
 import { userInfo } from "node:os"
 import { app, BrowserWindow, Notification, clipboard, dialog, ipcMain, shell } from "electron"
 import type { IpcMainEvent, IpcMainInvokeEvent } from "electron"
@@ -55,6 +56,35 @@ export function registerIpcHandlers(deps: Deps) {
       return null
     }
   })
+  // بيستخدم في وضع "Quick Chat": يعمل مجلد فرعي جديد جوه مجلد أساسي مختاره المستخدم مرة واحدة،
+  // من غير ما يحتاج يفتح نافذة اختيار مجلد في كل مرة.
+  ipcMain.handle(
+    "create-project-subfolder",
+    async (_event: IpcMainInvokeEvent, root: string, label?: string): Promise<string> => {
+      const safeLabel = (label ?? "chat")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 40)
+      const stamp = new Date()
+        .toISOString()
+        .replace(/[:.]/g, "-")
+        .replace("T", "_")
+        .slice(0, 19)
+      const base = safeLabel ? `${safeLabel}-${stamp}` : stamp
+
+      let candidate = join(root, base)
+      let suffix = 2
+      while (existsSync(candidate)) {
+        candidate = join(root, `${base}-${suffix}`)
+        suffix += 1
+      }
+
+      await mkdir(candidate, { recursive: true })
+      return candidate
+    },
+  )
   ipcMain.handle("set-default-server-url", (_event: IpcMainInvokeEvent, url: string | null) =>
     deps.setDefaultServerUrl(url),
   )

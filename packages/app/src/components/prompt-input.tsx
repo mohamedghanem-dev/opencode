@@ -1616,7 +1616,10 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
                   </div>
                 </div>
               </div>
-              <div class="flex h-11 items-center px-2">
+              <div
+                class="flex h-11 items-center px-2 rounded-b-xl"
+                style={{ "background-color": "color-mix(in srgb, var(--v2-background-bg-contrast) 4%, transparent)" }}
+              >
                 <div class="flex min-w-0 flex-1 items-center gap-1">
                   {fileAttachmentInput()}
                   <TooltipV2

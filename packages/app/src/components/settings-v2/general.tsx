@@ -313,6 +313,42 @@ export const SettingsGeneralV2: Component<{
         </SettingsRowV2>
 
         <SettingsRowV2
+          title={language.t("settings.general.row.quickChatRoot.title")}
+          description={language.t("settings.general.row.quickChatRoot.description")}
+        >
+          <div class="flex items-center gap-2">
+            <Show
+              when={settings.general.quickChatRoot()}
+              fallback={<span class="text-14-regular text-v2-text-text-faint">{language.t("common.notSet")}</span>}
+            >
+              {(path) => (
+                <span class="text-14-regular text-v2-text-text-faint truncate max-w-56" title={path()}>
+                  {path()}
+                </span>
+              )}
+            </Show>
+            <ButtonV2
+              variant="secondary"
+              size="small"
+              onClick={async () => {
+                const result = await platform.openDirectoryPickerDialog?.({
+                  title: language.t("settings.general.row.quickChatRoot.title"),
+                })
+                const picked = Array.isArray(result) ? result[0] : result
+                if (picked) settings.general.setQuickChatRoot(picked)
+              }}
+            >
+              {language.t("common.choose")}
+            </ButtonV2>
+            <Show when={settings.general.quickChatRoot()}>
+              <ButtonV2 variant="ghost" size="small" onClick={() => settings.general.setQuickChatRoot(null)}>
+                {language.t("common.clear")}
+              </ButtonV2>
+            </Show>
+          </div>
+        </SettingsRowV2>
+
+        <SettingsRowV2
           title={language.t("settings.general.row.newLayoutDesigns.title")}
           description={language.t("settings.general.row.newLayoutDesigns.description")}
         >
