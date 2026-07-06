@@ -2239,6 +2239,8 @@ export default function LegacyLayout(props: ParentProps) {
       onOpenSettings={openSettings}
       helpLabel={() => language.t("sidebar.help")}
       onOpenHelp={() => platform.openLink("https://nitrocode-ai.vercel.app")}
+      themeLabel={() => colorSchemeLabel(theme.colorScheme())}
+      onCycleTheme={() => cycleColorScheme(1)}
       renderPanel={() =>
         mobile ? <SidebarPanel project={currentProject} mobile /> : <SidebarPanel project={currentProject} merged />
       }

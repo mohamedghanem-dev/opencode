@@ -30,6 +30,8 @@ export const SidebarContent = (props: {
   onOpenSettings: () => void
   helpLabel: Accessor<string>
   onOpenHelp: () => void
+  themeLabel: Accessor<string>
+  onCycleTheme: () => void
   renderPanel: () => JSX.Element
 }): JSX.Element => {
   const expanded = createMemo(() => !!props.mobile || props.opened())
@@ -107,6 +109,19 @@ export const SidebarContent = (props: {
               onClick={props.onOpenHelp}
               aria-label={props.helpLabel()}
             />
+          </Tooltip>
+          <Tooltip placement={placement()} value={props.themeLabel()}>
+            <button
+              type="button"
+              data-component="icon-button"
+              data-variant="ghost"
+              data-size="large"
+              onClick={props.onCycleTheme}
+              aria-label={props.themeLabel()}
+              class="text-14-medium"
+            >
+              ◐
+            </button>
           </Tooltip>
         </div>
       </div>

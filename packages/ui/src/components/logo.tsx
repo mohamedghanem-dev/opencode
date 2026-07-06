@@ -15,7 +15,7 @@ export const Mark = (props: { class?: string }) => {
   )
 }
 
-export const Splash = (props: Pick<ComponentProps<"svg">, "ref" | "class">) => {
+export const Splash = (props: Pick<ComponentProps<"svg">, "ref" | "class"> & { class?: string }) => {
   return (
     <svg
       ref={props.ref}
@@ -25,8 +25,18 @@ export const Splash = (props: Pick<ComponentProps<"svg">, "ref" | "class">) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M60 80H20V40H60V80Z" fill="var(--icon-base)" />
-      <path d="M60 20H20V80H60V20ZM80 100H0V0H80V100Z" fill="var(--icon-strong-base)" />
+      <rect x="0" y="10" width="80" height="80" rx="14" fill="var(--icon-strong-base)" />
+      <text
+        x="40"
+        y="62"
+        text-anchor="middle"
+        font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+        font-weight="700"
+        font-size="46"
+        fill="var(--icon-invert-base)"
+      >
+        N
+      </text>
     </svg>
   )
 }
