@@ -39,7 +39,7 @@ const APP_IDS = {
 } as const
 
 const getBase = (appId: string): Configuration => ({
-  artifactName: "opencode-desktop-${os}-${arch}.${ext}",
+  artifactName: "nitro-code-${os}-${arch}.${ext}",
   directories: {
     output: "dist",
     buildResources: "resources",
