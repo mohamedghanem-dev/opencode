@@ -1,9 +1,6 @@
 {
-  "name": "OpenCode",
-  "short_name": "OpenCode",
-  "id": "/",
-  "start_url": "/",
-  "scope": "/",
+  "name": "Nitro Code",
+  "short_name": "Nitro Code",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -18,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#080808",
-  "background_color": "#080808",
+  "theme_color": "#c81e1e",
+  "background_color": "#0d0d0d",
   "display": "standalone"
 }
